@@ -1,0 +1,6 @@
+message User {
+	required int32  id 	 = 1;
+	required string username = 2;
+	required string mobile 	 = 3;
+	required string email	 = 4;
+}
