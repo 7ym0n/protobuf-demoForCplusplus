@@ -1,6 +1,8 @@
-message User {
-	required int32  id 	 = 1;
-	required string username = 2;
-	required string mobile 	 = 3;
-	required string email	 = 4;
+syntax = "proto3";
+
+message Users {
+	int32  id 	 = 1;
+	string username = 2;
+	string mobile 	 = 3;
+	string email	 = 4;
 }

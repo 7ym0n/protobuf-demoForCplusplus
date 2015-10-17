@@ -10,16 +10,19 @@
 #include <string>
 
 #include "message/proto/user.pb.h"
+#include "message/proto/Messages.pb.h"
 
 #define MAXLINE 4096
 using namespace std;
+//using namespace Messages;
 
 int main(int argc, char **argv)
 {
   int    listenfd, connfd;
   socklen_t clilen;
   struct sockaddr_in servaddr, cliaddr;
-  User user;
+  Users user;
+  Messages::Message mmsg;
 
   if ((listenfd = socket (AF_INET, SOCK_STREAM, 0)) < 0)
     {
@@ -63,13 +66,18 @@ int main(int argc, char **argv)
         //printf ("index = %i\n", index_);
         string sRecvStr;
         sRecvStr = recvbuf;
-        user.ParseFromString(sRecvStr);
+	mmsg.ParseFromString(sRecvStr);
+	cout << "Msg Type:" << mmsg.type() << endl;
+	cout << "Msg String:"<<mmsg.msgbody()<<endl;
+	/*
+	user.ParseFromString(sRecvStr);
         cout << "User Info:" << endl;
         cout << "ID:" << user.id() << endl;
         cout << "USERNAME:" << user.username() << endl;
         cout << "MOBILE:" << user.mobile() << endl;
         cout << "EMAIL:" << user.email() << endl;
-      }
+     	*/
+       }
       close(connfd);
     }
   close(listenfd);

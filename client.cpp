@@ -10,6 +10,7 @@
 #include <string>
 
 #include "message/proto/user.pb.h"
+#include "message/proto/Messages.pb.h"
 
 #define MAXLINE 4096
 
@@ -20,7 +21,9 @@ int main (int argc, char ** argv)
   int    sockfd;
   //char   recvbuf[MAXLINE];
   struct sockaddr_in servaddr;
-  User user;
+  Users user;
+  Messages::Message mmsg;
+  
   if (argc != 2)
     {
       printf ("usage: %s <ip address>.\n", *argv);
@@ -53,9 +56,11 @@ int main (int argc, char ** argv)
   user.set_username("demo");
   user.set_mobile("110");
   user.set_email("demo@secdomain.com");
-
-  string sendStr;
-  user.SerializeToString (&sendStr);
+  string sStr,sendStr;
+  user.SerializeToString (&sStr);
+  mmsg.set_type(Messages::HOME);
+  mmsg.set_msgbody(sStr); 
+  mmsg.SerializeToString (&sendStr);
   (void) memcpy (sSendBuffer, sendStr.c_str(), sendStr.size());
   write (sockfd, sSendBuffer, sizeof (sSendBuffer));
 
